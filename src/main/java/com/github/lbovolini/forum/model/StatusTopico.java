@@ -1,4 +1,4 @@
-package com.github.lbovolini.forum.modelo;
+package com.github.lbovolini.forum.model;
 
 public enum StatusTopico {
 	
