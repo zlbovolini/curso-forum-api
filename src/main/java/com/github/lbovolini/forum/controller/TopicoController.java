@@ -3,6 +3,8 @@ package com.github.lbovolini.forum.controller;
 import com.github.lbovolini.forum.request.TopicoRequest;
 import com.github.lbovolini.forum.response.TopicoResponse;
 import com.github.lbovolini.forum.service.TopicoService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class TopicoController {
         return ResponseEntity.notFound().build();
     }
 
+    @Cacheable("topico")
     @GetMapping("{id}")
     public ResponseEntity<TopicoResponse> find(@PathVariable Long id) {
         return topicoService.find(id)
@@ -63,6 +66,7 @@ public class TopicoController {
         return ResponseEntity.created(location).body(topicoResponse);
     }
 
+    @CacheEvict(value = "topico", allEntries = true)
     @PutMapping("{id}")
     public ResponseEntity<TopicoResponse> update(@PathVariable Long id, @Valid @RequestBody TopicoRequest topicoRequest) {
         return topicoService.update(id, topicoRequest)
