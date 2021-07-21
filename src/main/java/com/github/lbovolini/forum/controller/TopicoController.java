@@ -20,6 +20,17 @@ public class TopicoController {
         this.topicoService = topicoService;
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        boolean deleted = topicoService.delete(id);
+
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<TopicoResponse> find(@PathVariable Long id) {
         return topicoService.find(id)

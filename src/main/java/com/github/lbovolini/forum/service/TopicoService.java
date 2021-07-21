@@ -7,6 +7,7 @@ import com.github.lbovolini.forum.request.TopicoRequest;
 import com.github.lbovolini.forum.response.TopicoResponse;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,17 @@ public class TopicoService {
     public TopicoService(TopicoRepository topicoRepository, TopicoMapper topicoMapper) {
         this.topicoRepository = topicoRepository;
         this.topicoMapper = topicoMapper;
+    }
+
+    @Transactional
+    public Boolean delete(Long id) {
+        Optional<Topico> optionalTopico = topicoRepository.findById(id);
+
+        if (optionalTopico.isPresent()) {
+            topicoRepository.deleteById(id);
+        }
+
+        return optionalTopico.isPresent();
     }
 
     public Optional<TopicoResponse> find(Long id) {
