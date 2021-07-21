@@ -3,13 +3,14 @@ package com.github.lbovolini.forum.controller;
 import com.github.lbovolini.forum.request.TopicoRequest;
 import com.github.lbovolini.forum.response.TopicoResponse;
 import com.github.lbovolini.forum.service.TopicoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/topicos")
@@ -40,14 +41,14 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TopicoResponse>> findAll() {
-        List<TopicoResponse> topicoResponseList = topicoService.findAll();
+    public ResponseEntity<Page<TopicoResponse>> findAll(Pageable pageable) {
+        Page<TopicoResponse> topicoResponsePage = topicoService.findAll(pageable);
 
-        if (topicoResponseList.isEmpty()) {
+        if (topicoResponsePage.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(topicoResponseList);
+        return ResponseEntity.ok(topicoResponsePage);
     }
 
     @PostMapping

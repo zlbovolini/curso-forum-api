@@ -5,12 +5,12 @@ import com.github.lbovolini.forum.model.Topico;
 import com.github.lbovolini.forum.repository.TopicoRepository;
 import com.github.lbovolini.forum.request.TopicoRequest;
 import com.github.lbovolini.forum.response.TopicoResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TopicoService {
@@ -39,11 +39,9 @@ public class TopicoService {
                 .map(topicoMapper::toResponse);
     }
 
-    public List<TopicoResponse> findAll() {
-        return topicoRepository.findAll()
-                .stream()
-                .map(topicoMapper::toResponse)
-                .collect(Collectors.toUnmodifiableList());
+    public Page<TopicoResponse> findAll(Pageable pageable) {
+        return topicoRepository.findAll(pageable)
+                .map(topicoMapper::toResponse);
     }
 
     public TopicoResponse save(TopicoRequest topicoRequest) {
