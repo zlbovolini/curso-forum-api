@@ -43,4 +43,20 @@ public class TopicoService {
 
         return topicoMapper.toResponse(savedTopico);
     }
+
+    @Transactional
+    public Optional<TopicoResponse> update(Long id, TopicoRequest topicoRequest) {
+        boolean exists = topicoRepository.existsById(id);
+
+        if (!exists) {
+            return Optional.empty();
+        }
+
+        Topico toUpdateTopico = topicoMapper.toModel(topicoRequest);
+        toUpdateTopico.setId(id);
+
+        Topico topico = topicoRepository.save(toUpdateTopico);
+
+        return Optional.of(topicoMapper.toResponse(topico));
+    }
 }

@@ -49,4 +49,11 @@ public class TopicoController {
 
         return ResponseEntity.created(location).body(topicoResponse);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<TopicoResponse> update(@PathVariable Long id, @Valid @RequestBody TopicoRequest topicoRequest) {
+        return topicoService.update(id, topicoRequest)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
