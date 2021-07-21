@@ -7,6 +7,8 @@ import com.github.lbovolini.forum.request.TopicoRequest;
 import com.github.lbovolini.forum.response.TopicoResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TopicoService {
 
@@ -16,6 +18,11 @@ public class TopicoService {
     public TopicoService(TopicoRepository topicoRepository, TopicoMapper topicoMapper) {
         this.topicoRepository = topicoRepository;
         this.topicoMapper = topicoMapper;
+    }
+
+    public Optional<TopicoResponse> find(Long id) {
+        return topicoRepository.findById(id)
+                .map(topicoMapper::toResponse);
     }
 
     public TopicoResponse save(TopicoRequest topicoRequest) {
