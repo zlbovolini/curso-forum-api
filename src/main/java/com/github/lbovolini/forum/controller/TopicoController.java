@@ -9,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/topicos")
@@ -36,6 +37,17 @@ public class TopicoController {
         return topicoService.find(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TopicoResponse>> findAll() {
+        List<TopicoResponse> topicoResponseList = topicoService.findAll();
+
+        if (topicoResponseList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(topicoResponseList);
     }
 
     @PostMapping
