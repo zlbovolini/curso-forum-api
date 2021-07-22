@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:curso_forum_test
-    username: zup
-    password: zup
+    username: sa
+    password: ""
     driver-class-name: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
