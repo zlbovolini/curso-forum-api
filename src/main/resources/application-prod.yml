@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: ${FORUM_DATABASE_URL}
+    username: ${FORUM_DATABASE_USERNAME}
+    password: ${FORUM_DATABASE_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    show-sql: true
+    format-sql: true
+    hibernate:
+      ddl-auto: update
+  # Spring Boot Admin
+  boot:
+    admin:
+      client:
+        url: http://localhost:8081
+
+security:
+    jwt:
+      expiration: 86400000
+      secret: ${FORUM_JWT_SECRET}
+# actuator
+management:
+  endpoint:
+    health:
+      show-details: always
+    web:
+      exposure:
+        include: "*"
+info:
+  app:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+    encoding: @project.build.sourceEncoding@
+    java:
+      version: @java.version@
